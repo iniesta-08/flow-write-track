@@ -1,52 +1,178 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard.jpg";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Users, Star, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import type { User, Session } from "@supabase/supabase-js";
+import AuthModal from "@/components/AuthModal";
+import BroccoliWallet from "@/components/BroccoliWallet";
 
-export const Hero = () => {
+const Hero = () => {
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [broccoliPoints, setBroccoliPoints] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        // Award points for login
+        if (event === 'SIGNED_IN' && session?.user) {
+          setBroccoliPoints(prev => prev + 4);
+        }
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        setBroccoliPoints(4); // Default points for existing session
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setBroccoliPoints(0);
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
+    <>
+      <BroccoliWallet />
       
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-primary/20 text-sm font-medium text-foreground/80 mb-6">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Trusted by 100+ social media agencies
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-            Streamline Your
-            <span className="bg-gradient-primary bg-clip-text text-transparent"> Ad Campaigns</span>
-          </h1>
-          
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            AdFlow combines project management, AI-powered copywriting, and analytics in one platform. 
-            Perfect for social media agencies managing multiple brands.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="lg" className="px-8 py-6 text-lg">
-              Start Free Trial
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="glass" size="lg" className="px-8 py-6 text-lg">
-              <Play className="mr-2 h-5 w-5" />
-              Watch Demo
-            </Button>
-          </div>
-          
-          <div className="relative max-w-5xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-2xl opacity-20 scale-105" />
-            <img 
-              src={heroDashboard} 
-              alt="AdFlow Dashboard" 
-              className="relative rounded-2xl shadow-2xl border border-white/20 w-full"
-            />
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="heading-secondary">PlantSpot</div>
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="/explore" className="nav-link">DISCOVER</a>
+              <a href="#reviews" className="nav-link">REVIEWS</a>
+              <a href="#reserve" className="nav-link">RESERVE</a>
+              <a href="/wallet" className="nav-link">🥦 WALLET</a>
+            </div>
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div className="text-center">
+                  <div className="text-sm text-muted-foreground">Welcome back!</div>
+                  <div className="font-medium">🥦 {broccoliPoints} points</div>
+                </div>
+                <Button 
+                  onClick={handleSignOut}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button 
+                onClick={() => setIsAuthModalOpen(true)}
+                className="cta-button"
+              >
+                Login (+4 🥦)
+              </Button>
+            )}
           </div>
         </div>
-      </div>
-      
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-    </section>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-24 pb-16 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h1 className="heading-primary mb-6">
+              Discover Plant-Based<br />
+              Dining Near You
+            </h1>
+            <p className="body-text max-w-2xl mx-auto mb-8">
+              Find inclusive, welcoming restaurants that celebrate plant-based cuisine. 
+              From 100% vegan spots to veg-friendly establishments, discover your next 
+              favorite meal in a supportive community.
+            </p>
+            
+            {/* Location Pills */}
+            <div className="flex flex-wrap justify-center gap-3 mb-8">
+              {["Seattle", "Portland", "San Francisco", "Los Angeles"].map((city) => (
+                <div key={city} className="flex items-center gap-2 bg-secondary rounded-full px-4 py-2">
+                  <MapPin className="w-4 h-4 text-accent" />
+                  <span className="body-text-small font-medium">{city}</span>
+                </div>
+              ))}
+            </div>
+
+            <Button 
+              className="cta-button text-lg px-8 py-4"
+              onClick={() => navigate("/explore")}
+            >
+              🌱 Show Me the Plant Picks
+            </Button>
+            
+            {/* Team Selection Block */}
+            <Card className="mt-6 max-w-2xl mx-auto">
+              <CardContent className="p-6">
+                <h2 className="text-3xl font-bold mb-4 text-center">🎮 Pick Your Plant Persona</h2>
+                <p className="body-text text-center mb-8">
+                  Are you a flavor explorer or a creamy dreamer? Choose your side!
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-8 mb-6 justify-center items-center">
+                  <div className="flex flex-col items-center">
+                    <Button
+                      onClick={() => setSelectedTeam('spicy')}
+                      variant={selectedTeam === 'spicy' ? 'default' : 'outline'}
+                      className="text-6xl p-8 h-auto w-24 mb-3"
+                    >
+                      🌶️
+                    </Button>
+                    <span className="text-lg font-bold">Spicy Seekers</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Button
+                      onClick={() => setSelectedTeam('bowl')}
+                      variant={selectedTeam === 'bowl' ? 'default' : 'outline'}
+                      className="text-6xl p-8 h-auto w-24 mb-3"
+                    >
+                      🥗
+                    </Button>
+                    <span className="text-lg font-bold">Bowl Boss</span>
+                  </div>
+                </div>
+                
+                {selectedTeam && (
+                  <div className="text-center bg-secondary/30 rounded-lg p-4">
+                    <p className="body-text">
+                      Great pick! Check out your top recommended dishes in{" "}
+                      <span className="font-medium">Seattle</span>
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+        </div>
+      </section>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
+    </>
   );
 };
+
+export default Hero;

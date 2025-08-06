@@ -2,106 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Plant-Based Clean Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 259 94% 51%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 259 100% 65%;
-
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 240 5% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 259 94% 51%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 259 94% 51%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(259 94% 51%), hsl(299 89% 58%));
-    --gradient-hero: linear-gradient(135deg, hsl(259 94% 51% / 0.1), hsl(299 89% 58% / 0.05));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(240 5% 98%));
+    /* Primary Olive Green Palette */
+    --primary: 75 40% 41%; /* #798645 - Olive Green */
+    --primary-foreground: 60 9% 98%; /* Light cream text on primary */
     
-    --shadow-elegant: 0 10px 30px -10px hsl(259 94% 51% / 0.2);
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.08);
-    --shadow-glow: 0 0 40px hsl(259 100% 65% / 0.3);
-
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Background Colors */
+    --background: 60 50% 95%; /* #FEFAE0 - Light Cream */
+    --foreground: 75 30% 35%; /* #626F47 - Moss Green for text */
+    
+    /* Secondary Colors */
+    --secondary: 49 29% 85%; /* #F2EED7 - Warm Beige */
+    --secondary-foreground: 75 30% 35%; /* Moss green text on secondary */
+    
+    /* Accent Colors */
+    --accent: 75 30% 35%; /* #626F47 - Moss Green */
+    --accent-foreground: 60 50% 95%; /* Light cream text on accent */
+    
+    /* Muted Colors */
+    --muted: 49 29% 90%; /* Lighter warm beige */
+    --muted-foreground: 75 30% 40%; /* Slightly lighter moss green */
+    
+    /* Border and Input */
+    --border: 75 20% 80%; /* Light moss border */
+    --input: 75 20% 85%; /* Light moss input background */
+    --ring: 75 40% 41%; /* Primary olive for focus rings */
+    
+    /* Card Colors */
+    --card: 60 50% 97%; /* Very light cream for cards */
+    --card-foreground: 75 30% 35%; /* Moss green text */
+    
+    /* Popover Colors */
+    --popover: 60 50% 95%; /* Same as background */
+    --popover-foreground: 75 30% 35%; /* Moss green text */
+    
+    /* Destructive (for errors) */
+    --destructive: 0 65% 51%; /* Red for errors */
+    --destructive-foreground: 0 0% 98%; /* White text on red */
+    
+    /* Sidebar (if used) */
+    --sidebar-background: 49 29% 85%; /* Warm beige */
+    --sidebar-foreground: 75 30% 35%; /* Moss green */
+    --sidebar-primary: 75 40% 41%; /* Olive green */
+    --sidebar-primary-foreground: 60 9% 98%; /* Light cream */
+    --sidebar-accent: 75 30% 35%; /* Moss green */
+    --sidebar-accent-foreground: 60 50% 95%; /* Light cream */
+    --sidebar-border: 75 20% 80%; /* Light moss */
+    --sidebar-ring: 75 40% 41%; /* Primary olive */
+    
+    /* Border Radius */
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Dark mode adjustments while maintaining the olive theme */
+    --background: 75 15% 10%; /* Very dark olive */
+    --foreground: 60 20% 85%; /* Light cream text */
+    
+    --card: 75 15% 12%; /* Slightly lighter dark olive */
+    --card-foreground: 60 20% 85%; /* Light cream text */
+    
+    --popover: 75 15% 12%;
+    --popover-foreground: 60 20% 85%;
+    
+    --primary: 75 40% 50%; /* Brighter olive for dark mode */
+    --primary-foreground: 75 15% 10%; /* Dark text on bright olive */
+    
+    --secondary: 75 20% 20%; /* Dark olive secondary */
+    --secondary-foreground: 60 20% 85%; /* Light text */
+    
+    --muted: 75 20% 15%; /* Muted dark olive */
+    --muted-foreground: 60 15% 65%; /* Muted light text */
+    
+    --accent: 75 30% 45%; /* Moss green accent */
+    --accent-foreground: 75 15% 10%; /* Dark text on accent */
+    
+    --destructive: 0 62% 30%; /* Darker red for dark mode */
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 75 20% 25%; /* Olive border */
+    --input: 75 20% 20%; /* Dark olive input */
+    --ring: 75 40% 50%; /* Bright olive focus ring */
   }
 }
 
@@ -109,8 +93,75 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-playfair;
+  }
+}
+
+/* Clean Typography Utilities */
+@layer utilities {
+  .heading-primary {
+    @apply font-poppins font-bold text-3xl md:text-4xl lg:text-5xl text-primary uppercase tracking-wide;
+  }
+  
+  .heading-secondary {
+    @apply font-poppins font-semibold text-xl md:text-2xl lg:text-3xl text-primary uppercase;
+  }
+  
+  .heading-tertiary {
+    @apply font-poppins font-medium text-lg md:text-xl text-accent;
+  }
+  
+  .body-text {
+    @apply font-playfair text-base md:text-lg text-foreground leading-relaxed;
+  }
+  
+  .body-text-small {
+    @apply font-playfair text-sm md:text-base text-muted-foreground;
+  }
+  
+  .button-text {
+    @apply font-poppins font-medium text-sm md:text-base uppercase tracking-wide;
+  }
+}
+
+/* Component Styles */
+@layer components {
+  .clean-card {
+    @apply bg-card rounded-lg shadow-card border border-border p-6;
+  }
+  
+  .feature-card {
+    @apply clean-card hover:shadow-soft transition-all duration-300;
+  }
+  
+  .nav-link {
+    @apply font-poppins font-medium text-foreground hover:text-primary transition-colors duration-200;
+  }
+  
+  .cta-button {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-3 button-text transition-colors duration-200;
+  }
+  
+  .secondary-button {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border rounded-lg px-6 py-3 button-text transition-colors duration-200;
+  }
+  
+  /* Clean Auth Modal Styles */
+  .auth-modal {
+    @apply bg-card border border-border rounded-lg shadow-soft;
+  }
+  
+  .auth-input {
+    @apply bg-background border border-border rounded-lg px-4 py-3 font-playfair;
+    @apply focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200;
+  }
+  
+  .auth-button {
+    @apply cta-button w-full;
+  }
+  
+  .social-btn {
+    @apply secondary-button w-full flex items-center justify-center gap-3;
   }
 }

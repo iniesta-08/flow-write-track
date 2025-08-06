@@ -1,140 +1,157 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Zap, BarChart3, Users, Calendar, PenTool } from "lucide-react";
-import aiCopywriter from "@/assets/ai-copywriter.jpg";
-import analytics from "@/assets/analytics.jpg";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Search, MessageCircle, Calendar, TrendingUp, BookOpen, Users } from "lucide-react";
 
-export const Features = () => {
+const Features = () => {
+  // Core features focused on plant-based dining
   const features = [
     {
-      icon: <CheckCircle className="h-6 w-6" />,
-      title: "Campaign Management",
-      description: "Organize campaigns like projects with tasks, deadlines, and team collaboration.",
-      image: null,
-      benefits: ["Kanban boards", "Task assignments", "Progress tracking", "Team collaboration"]
+      icon: Search,
+      title: "Plant-Based Restaurant Discovery",
+      description: "Find 100% vegan, vegetarian, and veg-friendly restaurants with detailed filters for dietary needs and preferences.",
+      stats: "800+ verified locations"
     },
     {
-      icon: <PenTool className="h-6 w-6" />,
-      title: "AI Copywriting Assistant",
-      description: "Generate compelling ad copy, captions, and marketing content with AI.",
-      image: aiCopywriter,
-      benefits: ["Smart prompts", "Brand voice training", "Multi-platform optimization", "A/B testing"]
+      icon: MessageCircle,
+      title: "Summarized Reviews",
+      description: "Read concise, helpful reviews from fellow plant-based food lovers that focus on taste, atmosphere, and community.",
+      stats: "12,000+ authentic reviews"
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
-      title: "Campaign Analytics",
-      description: "Track performance across all campaigns with detailed insights and reporting.",
-      image: analytics,
-      benefits: ["Real-time metrics", "Custom dashboards", "Performance insights", "ROI tracking"]
+      icon: Calendar,
+      title: "Instant Reservations",
+      description: "Book tables seamlessly at your favorite plant-based spots with real-time availability and confirmation.",
+      stats: "Available 24/7"
     }
   ];
 
   return (
-    <section className="py-24 bg-secondary/30">
-      <div className="container px-4 mx-auto">
+    <section className="py-20 px-6 bg-secondary/30">
+      <div className="container mx-auto max-w-6xl">
+        {/* Features Section */}
         <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4 px-4 py-2">
-            <Zap className="mr-2 h-4 w-4" />
-            Powerful Features
-          </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Everything you need to manage 
-            <span className="bg-gradient-primary bg-clip-text text-transparent"> ad campaigns</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            From planning to execution to analysis - AdFlow has you covered
+          <h2 className="heading-primary mb-6">Everything You Need</h2>
+          <p className="body-text max-w-2xl mx-auto">
+            Discover, review, and reserve at the best plant-based dining spots 
+            in your community with our inclusive platform.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                {features[0].icon}
-              </div>
-              <h3 className="text-2xl font-bold">{features[0].title}</h3>
-            </div>
-            <p className="text-muted-foreground text-lg mb-6">{features[0].description}</p>
-            <div className="grid grid-cols-2 gap-3">
-              {features[0].benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">{benefit}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {features.map((feature, index) => (
+            <Card key={index} className="feature-card text-center">
+              <CardContent className="p-8">
+                <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <feature.icon className="w-8 h-8 text-primary" />
                 </div>
-              ))}
-            </div>
-          </div>
-          <Card className="overflow-hidden border-none shadow-card bg-gradient-card">
-            <CardHeader className="pb-0">
-              <div className="h-48 bg-gradient-hero rounded-lg flex items-center justify-center">
-                <div className="grid grid-cols-3 gap-2 p-4">
-                  {[...Array(9)].map((_, i) => (
-                    <div key={i} className="h-16 bg-white/10 backdrop-blur-sm rounded border border-white/20" />
-                  ))}
+                <h3 className="heading-tertiary mb-4">{feature.title}</h3>
+                <p className="body-text mb-4">{feature.description}</p>
+                <div className="bg-accent/10 rounded-full px-4 py-2 inline-block">
+                  <span className="body-text-small font-medium text-accent">{feature.stats}</span>
                 </div>
-              </div>
-            </CardHeader>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
-          <Card className="overflow-hidden border-none shadow-card bg-gradient-card order-2 lg:order-1">
-            <CardHeader className="pb-0">
-              <img 
-                src={aiCopywriter} 
-                alt="AI Copywriting Assistant" 
-                className="rounded-lg w-full h-48 object-cover"
-              />
-            </CardHeader>
-          </Card>
-          <div className="order-1 lg:order-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                {features[1].icon}
+        {/* Community Stats */}
+        <div className="bg-card rounded-lg p-8 mb-16">
+          <div className="text-center mb-8">
+            <h3 className="heading-secondary mb-4">Our Growing Community</h3>
+            <p className="body-text">
+              Join thousands of plant-curious and plant-proud food lovers across the country.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Users className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold">{features[1].title}</h3>
+              <div className="heading-secondary text-primary mb-2">15,000+</div>
+              <p className="body-text-small">Active community members</p>
             </div>
-            <p className="text-muted-foreground text-lg mb-6">{features[1].description}</p>
-            <div className="grid grid-cols-2 gap-3">
-              {features[1].benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">{benefit}</span>
-                </div>
-              ))}
+            <div>
+              <div className="bg-accent/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Search className="w-6 h-6 text-accent" />
+              </div>
+              <div className="heading-secondary text-accent mb-2">800+</div>
+              <p className="body-text-small">Verified restaurants</p>
+            </div>
+            <div>
+              <div className="bg-secondary/50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <TrendingUp className="w-6 h-6 text-primary" />
+              </div>
+              <div className="heading-secondary text-primary mb-2">2,500+</div>
+              <p className="body-text-small">Monthly reservations</p>
             </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                {features[2].icon}
-              </div>
-              <h3 className="text-2xl font-bold">{features[2].title}</h3>
+        {/* Know Your Community Section */}
+        <div className="bg-card rounded-lg p-8">
+          <div className="text-center mb-8">
+            <div className="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+              <BookOpen className="w-8 h-8 text-accent" />
             </div>
-            <p className="text-muted-foreground text-lg mb-6">{features[2].description}</p>
-            <div className="grid grid-cols-2 gap-3">
-              {features[2].benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">{benefit}</span>
-                </div>
-              ))}
+            <h3 className="heading-secondary mb-4">Know Your Community</h3>
+            <p className="body-text max-w-2xl mx-auto">
+              Stay informed about plant-based trends, community insights, and the growing 
+              movement toward sustainable dining choices.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-background rounded-lg p-6 text-center">
+              <h4 className="heading-tertiary mb-3">Plant-Based Growth</h4>
+              <p className="body-text-small mb-2">
+                <strong>23%</strong> of Americans are reducing meat consumption
+              </p>
+              <p className="body-text-small text-muted-foreground">
+                2024 Plant-Based Survey
+              </p>
+            </div>
+            <div className="bg-background rounded-lg p-6 text-center">
+              <h4 className="heading-tertiary mb-3">Market Expansion</h4>
+              <p className="body-text-small mb-2">
+                <strong>$8.1B</strong> plant-based food market in the US
+              </p>
+              <p className="body-text-small text-muted-foreground">
+                Good Food Institute
+              </p>
+            </div>
+            <div className="bg-background rounded-lg p-6 text-center">
+              <h4 className="heading-tertiary mb-3">Restaurant Growth</h4>
+              <p className="body-text-small mb-2">
+                <strong>300%</strong> increase in vegan menu options
+              </p>
+              <p className="body-text-small text-muted-foreground">
+                Past 5 years
+              </p>
             </div>
           </div>
-          <Card className="overflow-hidden border-none shadow-card bg-gradient-card">
-            <CardHeader className="pb-0">
-              <img 
-                src={analytics} 
-                alt="Campaign Analytics" 
-                className="rounded-lg w-full h-48 object-cover"
-              />
-            </CardHeader>
-          </Card>
+
+          <div className="text-center">
+            <Button className="secondary-button">
+              EXPLORE COMMUNITY INSIGHTS
+            </Button>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <h3 className="heading-secondary mb-4">Ready to Explore?</h3>
+          <p className="body-text mb-8 max-w-xl mx-auto">
+            Join our welcoming community and discover amazing plant-based 
+            dining experiences that align with your values.
+          </p>
+          <Button className="cta-button text-lg px-8 py-4">
+            START DISCOVERING
+          </Button>
         </div>
       </div>
     </section>
   );
 };
+
+export default Features;
